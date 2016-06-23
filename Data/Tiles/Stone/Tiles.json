@@ -5,7 +5,7 @@
             "type": "tile",
             "name": "Block Wall",
             "tile-type": "Wall",
-            "floor": [
+            "floors": [
                 { "path":"data/tilesets/stone/Wall00.png", "freq":1.0 }
             ]
         },
@@ -13,7 +13,7 @@
             "type": "tile",
             "name": "Empty Tile Floor",
             "tile-type": "Floor",
-            "floor": [
+            "floors": [
                 { "path":"data/tilesets/stone/Floor00.png", "freq":1.0 },
                 { "path":"data/tilesets/stone/Floor01.png", "freq":0.01 },
                 { "path":"data/tilesets/stone/Floor02.png", "freq":0.01 },
@@ -27,7 +27,7 @@
             "type": "tile",
             "name": "Down Stair",
             "tile-type": "DownStair",
-            "floor": [
+            "floors": [
                 { "path":"data/tilesets/stone/DownStair.png", "freq":1.00 }
             ]
         },
@@ -35,7 +35,7 @@
             "type": "tile",
             "name": "Up Stair",
             "tile-type": "UpStair",
-            "floor": [
+            "floors": [
                 { "path":"data/tilesets/stone/UpStair.png", "freq":1.00 }
             ]
         }

@@ -1,7 +1,26 @@
 class Randomizer {
+    static pick(set) {
+        if (!set instanceof Array || set.length <= 0)
+            return null;
+
+        var idx = Math.floor(Math.random() * set.length);
+        return idx;
+    }
+
+    static pickIndex(set) {
+        if (!set instanceof Array || set.length <= 0)
+            return null;
+
+        var idx = Math.floor(Math.random() * set.length);
+        return idx;
+    }
+
     static pickWithFreq(set, getFreq) {
-        set = set || [];
-        getFreq = getFreq || (i => i);
+        if (!set instanceof Array || set.length <= 0)
+            return null;
+
+        if (!getFreq instanceof Function)
+            getFreq = (i => i);
 
         var totalFreq = set.sum(i => getFreq(i));
         var ordered = set.orderBy(i => getFreq(i));
@@ -25,7 +44,9 @@ class Randomizer {
     }
 
     static pickIndexWithFreq(set, getFreq) {
-        set = set || [];
+        if (!set instanceof Array || set.length <= 0)
+            return null;
+
         getFreq = getFreq || (i => i);
 
         var totalFreq = set.sum(i => getFreq(i));
@@ -96,4 +117,15 @@ Array.prototype.last = function() {
         return void 0;
 
     this[this.length - 1];  
+}
+
+Array.prototype.where = function(predicate) {
+    var res = [];
+
+    this.forEach(i => {
+        if (predicate(i))
+            res.push(i);
+    });
+
+    return res;
 }

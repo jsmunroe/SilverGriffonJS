@@ -19,19 +19,19 @@
     <script src="Layers/Layer.js"></script>
     <script src="Layers/RoomLayer.js"></script>
     <script src="Library.js"></script>
-    <script src="Items.js"></script>
+    <script src="Resources.js"></script>
+    <script src="Controllers.js"></script>
+    <script src="World.js"></script>
     <script src="Game.js"></script>
     <script>
         $(function () {
             var canvas = $('#canvas')[0];
 
-            var game = new Game(canvas);
+            Game.init(canvas, onGameLoaded);
 
             var room = {};
             var roomLayer = new RoomLayer(room);
-            game.addLayer(roomLayer);
-
-            game.start();
+            Game.addLayer(roomLayer);
 
             canvas.width = $(window).innerWidth();
             canvas.height = $(window).innerHeight();
@@ -41,6 +41,10 @@
                 canvas.height = $(window).innerHeight();
             });
         });
+
+        function onGameLoaded() {
+            Game.run();
+        }
     </script>
 </body>
 </html>

@@ -5,6 +5,8 @@
         "data/items/armor/platemail/items.json",
         "data/items/weapons/blades/items.json",
         "data/items/containers/items.json",
-        "data/items/miscellaneous/items.json"
+        "data/items/miscellaneous/items.json",
+        "data/tiles/stone/tiles.json",
+        "data/tiles/clay/tiles.json"
     ]
 }

@@ -1,55 +1,60 @@
 class Game {
-    constructor (buffer) {
-        this.buffer = buffer;
-        this.ctx = buffer.getContext("2d");
+    static init (buffer, loadSuccess) {
+        Game.buffer = buffer;
+        Game.loadSuccess = loadSuccess;
+        Game.ctx = buffer.getContext("2d");
 
-        this.library = new Library("data/game.json");
+        Game.library = new Library("data/game.json", Game.onLoad);
 
-        this.layers = [];
+        Game.layers = [];
     }
 
     // Start the game loop.
-    start() {
-        var self = this;
-
-        if (this.intHandle != void 0) {
-            clearInterval(this.intHandle);
+    static run() {
+        if (Game.intHandle != void 0) {
+            clearInterval(Game.intHandle);
         }
 
-        this.intHandle = requestAnimationFrame(function (time) { interval(self, time); });
+        Game.intHandle = requestAnimationFrame(function (time) { Game.interval(time); });
     }
 
     // Animation frame.
-    interval(game, time) {
-        game.update();
-        game.draw();
+    static interval(game, time) {
+        Game.update();
+        Game.draw(Game.ctx);
 
-        this.intHandle = requestAnimationFrame(function (time) { interval(game, time); });
+        Game.intHandle = requestAnimationFrame(function (time) { Game.interval(game, time); });
     }
 
     // Update the game.
-    update() {
-        for (var i = 0; i < this.layers.length; i++) {
-            var layer = this.layers[i];
+    static update() {
+        for (var i = 0; i < Game.layers.length; i++) {
+            var layer = Game.layers[i];
             layer.update();
         }
     }
 
     // Draw the game.
-    draw(ctx) {
-        for (var i = 0; i < this.layers.length; i++) {
-            var layer = this.layers[i];
-            layer.draw(this.ctx);
+    static draw(ctx) {
+        for (var i = 0; i < Game.layers.length; i++) {
+            var layer = Game.layers[i];
+            layer.draw(ctx);
         }
     }
 
     // Add layer.
-    addLayer(layer) {
-        this.layers.push(layer);
+    static addLayer(layer) {
+        Game.layers.push(layer);
     }
 
     // Remove layer.
-    removeLayer(layer) {
-        this.layers = Util.reject(this.layers, function (L) { return L.id === layer.id });
+    static removeLayer(layer) {
+        Game.layers = Util.reject(Game.layers, function (L) { return L.id === layer.id });
+    }
+
+    // When the library items are completely loaded.
+    static onLoad() {
+        if (Game.loadSuccess instanceof Function)
+            Game.loadSuccess();
     }
 }
