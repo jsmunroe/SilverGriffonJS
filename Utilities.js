@@ -71,6 +71,12 @@ class Randomizer {
     }
 }
 
+// String extensions
+
+String.prototype.equalsNoCase = function(other) {
+    return this.toLocaleLowerCase() === (other + '').toLocaleLowerCase();
+}
+
 
 
 // Array extensions
@@ -105,18 +111,26 @@ Array.prototype.sum = function(selector) {
 }
 
 
-Array.prototype.first = function() {
+Array.prototype.first = function(predicate) {
     if (this.length <= 0)
         return void 0;
 
-    this[0];
+    if (!predicate)
+        return this[0];
+    
+    this.forEach(i => {
+        if (predicate(i))
+            return i;
+    });
+
+    return void 0;
 }
 
 Array.prototype.last = function() {
     if (this.length <= 0)
         return void 0;
 
-    this[this.length - 1];  
+    this[this.length - 1];
 }
 
 Array.prototype.where = function(predicate) {

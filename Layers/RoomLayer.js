@@ -13,7 +13,13 @@ RoomLayer.prototype.update = function (gameState) {
 
 // Draw this layer.
 RoomLayer.prototype.draw = function (context) {
-    var image = new Image();
-    image.src = "data/characters/player/player.png";
-    context.drawImage(image, 100, 100);
+    var tileSet = Game.library.getTileSet("Stone");
+
+    for (var y = 0; y < 9; y++) {
+    for (var x = 0; x < 9; x++) {
+        var tile = Randomizer.pick(tiles)
+        var floor = Randomizer.pickWithFreq(tile.floors, i => i.frequency);
+        context.drawImage(floor.image, x * 32, y * 32, 32, 32);
+    }
+    }
 }

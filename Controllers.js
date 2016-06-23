@@ -34,7 +34,7 @@ class Controller {
 
 
 
-class DumbController {
+class DumbController extends Controller {
     constructor(data) {
         super(data);
         this.is[DumbController] = true;

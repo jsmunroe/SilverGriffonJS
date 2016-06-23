@@ -60,7 +60,7 @@ class Library {
             this.success();
     }
 
-    getItem(type, selector) {
+    getResources(type, selector) {
         type = type || Item;
         selector = selector || (i => true);
         
@@ -69,8 +69,10 @@ class Library {
         return this.resources.where(i => i.is && i.is[type] && selector(i));
     }
 
-    getItemSet(type, setName) {
-        return this.getItem(type, i => i.setName === setName);
+    getTileSet(setName) {
+        var tiles = getResources(Tile, i => i.setName.equalsNoCase(setName));
+
+        // TODO: Create tile set.
     }
 
     // Get object from JSON at given path.

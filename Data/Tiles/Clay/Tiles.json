@@ -6,7 +6,7 @@
             "name": "Block Wall",
             "tile-type": "Wall",
             "floors": [
-                { "id":0, "path":"data/tilesets/clay/Wall00.png", "freq":1.0 }
+                { "id":0, "path":"data/tiles/clay/Wall00.png", "freq":1.0 }
             ]
         },
         {
@@ -14,7 +14,7 @@
             "name": "Empty Tile Floor",
             "tile-type": "Floor",
             "floors": [
-                { "id":2, "path":"data/tilesets/clay/Floor00.png", "freq":1.0 }
+                { "id":2, "path":"data/tiles/clay/Floor00.png", "freq":1.0 }
             ]
         },
         {
@@ -22,7 +22,7 @@
             "name": "Down Stair",
             "tile-type": "DownStair",
             "floors": [
-                { "id":9, "path":"data/tilesets/clay/DownStair.png", "freq":1.0 }
+                { "id":9, "path":"data/tiles/clay/DownStair.png", "freq":1.0 }
             ]
         },
         {
@@ -30,7 +30,7 @@
             "name": "Up Stair",
             "tile-type": "UpStair",
             "floors": [
-                { "id":10, "path":"data/tilesets/clay/UpStair.png", "freq":1.00 }
+                { "id":10, "path":"data/tiles/clay/UpStair.png", "freq":1.00 }
             ]
         }
     ]

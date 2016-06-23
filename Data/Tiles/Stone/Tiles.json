@@ -6,7 +6,7 @@
             "name": "Block Wall",
             "tile-type": "Wall",
             "floors": [
-                { "path":"data/tilesets/stone/Wall00.png", "freq":1.0 }
+                { "path":"data/tiles/stone/Wall00.png", "freq":1.0 }
             ]
         },
         {
@@ -14,13 +14,13 @@
             "name": "Empty Tile Floor",
             "tile-type": "Floor",
             "floors": [
-                { "path":"data/tilesets/stone/Floor00.png", "freq":1.0 },
-                { "path":"data/tilesets/stone/Floor01.png", "freq":0.01 },
-                { "path":"data/tilesets/stone/Floor02.png", "freq":0.01 },
-                { "path":"data/tilesets/stone/Floor03.png", "freq":0.01 },
-                { "path":"data/tilesets/stone/Floor04.png", "freq":0.01 },
-                { "path":"data/tilesets/stone/Floor05.png", "freq":0.01 },
-                { "path":"data/tilesets/stone/Floor06.png", "freq":0.01 }
+                { "path":"data/tiles/stone/Floor00.png", "freq":1.0 },
+                { "path":"data/tiles/stone/Floor01.png", "freq":0.01 },
+                { "path":"data/tiles/stone/Floor02.png", "freq":0.01 },
+                { "path":"data/tiles/stone/Floor03.png", "freq":0.01 },
+                { "path":"data/tiles/stone/Floor04.png", "freq":0.01 },
+                { "path":"data/tiles/stone/Floor05.png", "freq":0.01 },
+                { "path":"data/tiles/stone/Floor06.png", "freq":0.01 }
             ]
         },
         {
@@ -28,7 +28,7 @@
             "name": "Down Stair",
             "tile-type": "DownStair",
             "floors": [
-                { "path":"data/tilesets/stone/DownStair.png", "freq":1.00 }
+                { "path":"data/tiles/stone/DownStair.png", "freq":1.00 }
             ]
         },
         {
@@ -36,7 +36,7 @@
             "name": "Up Stair",
             "tile-type": "UpStair",
             "floors": [
-                { "path":"data/tilesets/stone/UpStair.png", "freq":1.00 }
+                { "path":"data/tiles/stone/UpStair.png", "freq":1.00 }
             ]
         }
     ]
