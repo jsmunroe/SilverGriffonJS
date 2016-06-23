@@ -1,0 +1,10 @@
+{
+    "resources": [
+        "data/characters/player/characters.json",
+        "data/characters/sewer/characters.json",
+        "data/items/armor/platemail/items.json",
+        "data/items/weapons/blades/items.json",
+        "data/items/containers/items.json",
+        "data/items/miscellaneous/items.json"
+    ]
+}

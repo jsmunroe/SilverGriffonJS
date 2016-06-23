@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<gamedata name="Blades">
+    <item id="d24d615a-2959-4286-a402-1d17a9f78abe" name="Saber" type="SilverGriffen.Models.Items.ItemTypes.Weapon">
+        <image><![CDATA[Saber.png]]></image>
+        <paper-doll><![CDATA[Saber.PaperDoll.png]]></paper-doll>
+        <attack-modifier min="4" max="16"/>
+        <equipment-type>LeftHandHeld</equipment-type>
+        <frequency>
+            <default>5</default>
+            <win>5</win>
+            <find>3</find>
+            <shop>10</shop>
+        </frequency>
+    </item>
+</gamedata>

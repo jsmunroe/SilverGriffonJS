@@ -1,0 +1,10 @@
+﻿{
+    "name": "Containers",
+    "items": [
+        {
+            "type": "container",
+            "name": "Chest",
+            "image": "data/items/containers/chest.png"
+        }
+    ] 
+}

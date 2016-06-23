@@ -1,0 +1,47 @@
+﻿{
+    "name": "Sewer",
+    "items": [
+        {
+            "type": "character",
+            "name": "Rat",
+            "controller": { 
+                "mode": "dumb",
+                "standby-proclivity": "wander"
+            },
+            "characteristics": { },
+            "sprite": "data/characters/sewer/rat.png"
+        },
+        {
+            "type": "character",
+            "name": "Worm",
+            "controller": { 
+                "mode": "dumb",
+                "standby-proclivity": "wander"
+            },
+            "characteristics": { },
+            "sprite": "data/characters/sewer/worm.png"
+        },
+        {
+            "type": "character",
+            "name": "Slime",
+            "controller": { 
+                "mode": "dumb",
+                "standby-proclivity": "wander"
+            },
+            "characteristics": { 
+                "evade": 3 
+            },
+            "sprite": "data/characters/sewer/slime.png"
+        },
+        {
+            "type": "character",
+            "name": "Bat",
+            "controller": { 
+                "mode": "dumb",
+                "standby-proclivity": "wander"
+            },
+            "characteristics": { },
+            "sprite": "data/characters/sewer/bat.png"
+        }
+    ]
+}

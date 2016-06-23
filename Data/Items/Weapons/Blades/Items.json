@@ -1,0 +1,22 @@
+﻿{
+    "name": "Blades",
+    "items": [
+        {
+            "type": "weapon",
+            "name": "Saber",
+            "equip":"LeftHandHeld",
+            "image":"data/items/weapons/blades/saber.png",
+            "paperdoll":"data/items/weapons/blades/saber.paperdoll.png",
+            "frequency":{
+                "default":5,
+                "win":5,
+                "find":3,
+                "shop":10
+            },
+            "attack":{
+                "min":4,
+                "max":16
+            }
+        }
+    ]
+}

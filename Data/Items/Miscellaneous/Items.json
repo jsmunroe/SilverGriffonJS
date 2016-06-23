@@ -1,0 +1,15 @@
+﻿{
+    "name": "Miscellaneous",
+    "items": [
+        {
+            "type": "coin",
+            "name": "Coin",
+            "image": "data/items/miscellaneous/coin.png"
+        },
+        {
+            "type": "map",
+            "name": "Map",
+            "image": "data/items/miscellaneous/map.png"
+        }
+    ] 
+}

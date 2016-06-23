@@ -1,0 +1,107 @@
+﻿{
+    "name": "Plate Mail",
+    "items": [
+        {
+            "type": "armor",
+            "name": "Plate Mail Helm",
+            "equip":"Head",
+            "image":"data/items/armor/platemail/helm.png",
+            "paperdoll":"data/items/armor/platemail/helm.paperdoll.png",
+            "frequency":{
+                "default":5,
+                "win":5,
+                "find":3,
+                "shop":10
+            },
+            "defend":{
+                "min":1,
+                "max":4
+            }
+        },
+        {
+            "type": "armor",
+            "name":"Plate Mail Breastplate",
+            "equip":"Chest",
+            "image":"data/items/armor/platemail/breast.png",
+            "paperdoll":"data/items/armor/platemail/breast.paperdoll.png",
+            "frequency":{
+                "default":5,
+                "win":5,
+                "find":3,
+                "shop":10
+            },
+            "defend":{
+                "min":3,
+                "max":10
+            }
+        },
+        {
+            "type": "armor",
+            "name":"Plate Mail Greaves",
+            "equip":"Legs",
+            "image":"data/items/armor/platemail/greaves.png",
+            "paperdoll":"data/items/armor/platemail/greaves.paperdoll.png",
+            "frequency":{
+                "default":5,
+                "win":5,
+                "find":3,
+                "shop":10
+            },
+            "defend":{
+                "min":3,
+                "max":8
+            }
+        },
+        {
+            "type": "armor",
+            "name":"Plate Mail Gauntlets",
+            "equip":"Hands",
+            "image":"data/items/armor/platemail/gauntlets.png",
+            "paperdoll":"data/items/armor/platemail/gauntlets.paperdoll.png",
+            "frequency":{
+                "default":5,
+                "win":5,
+                "find":3,
+                "shop":10
+            },
+            "defend":{
+                "min":1,
+                "max":4
+            }
+        },
+        {
+            "type": "armor",
+            "name":"Plate Mail Boots",
+            "equip":"Feet",
+            "image":"data/items/armor/platemail/boots.png",
+            "paperdoll":"data/items/armor/platemail/boots.paperdoll.png",
+            "frequency":{
+                "default":5,
+                "win":5,
+                "find":3,
+                "shop":10
+            },
+            "defend":{
+                "min":1,
+                "max":4
+            }
+        },
+        {
+            "type": "armor",
+            "name":"Plate Mail Shield",
+            "equip":"RightHandHeld",
+            "image":"data/items/armor/platemail/shield.png",
+            "paperdoll":"data/items/armor/platemail/shield.paperdoll.png",
+            "frequency":{
+                "default":5,
+                "win":5,
+                "find":3,
+                "shop":10
+            },
+            "defend":{
+                "min":4,
+                "max":16
+            }
+        }
+    ]
+}

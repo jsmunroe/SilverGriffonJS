@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>The Silver Griffen</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas">This requires a browser that supports the canvas element.</canvas>
+
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script src="Utilities.js"></script>
+    <script src="Layers/Layer.js"></script>
+    <script src="Layers/RoomLayer.js"></script>
+    <script src="Library.js"></script>
+    <script src="Items.js"></script>
+    <script src="Game.js"></script>
+    <script>
+        $(function () {
+            var canvas = $('#canvas')[0];
+
+            var game = new Game(canvas);
+
+            var room = {};
+            var roomLayer = new RoomLayer(room);
+            game.addLayer(roomLayer);
+
+            game.start();
+
+            canvas.width = $(window).innerWidth();
+            canvas.height = $(window).innerHeight();
+
+            $(window).resize(function (ev) {
+                canvas.width = $(window).innerWidth();
+                canvas.height = $(window).innerHeight();
+            });
+        });
+    </script>
+</body>
+</html>

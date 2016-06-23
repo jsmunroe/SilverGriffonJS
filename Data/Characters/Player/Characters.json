@@ -1,0 +1,11 @@
+﻿{
+    "name": "Player",
+    "items": [
+        {
+            "type": "player",
+            "name": "Player",
+            "controller": { "mode": "input" },
+            "sprite": "data/characters/player/player.png"
+        }
+    ]
+}
