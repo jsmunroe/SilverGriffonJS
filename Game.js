@@ -54,6 +54,14 @@ class Game {
 
     // When the library items are completely loaded.
     static onLoad() {
+        World.init(new TileSetFactory(Game.library, "Stone"), new RandomRoomBuilderFactory());
+
+        // Add room layer.
+        var room = World.room(0,0);
+        var roomLayer = new RoomLayer(room);
+        Game.layers.push(roomLayer);
+
+        // Notify client if subscribed.
         if (Game.loadSuccess instanceof Function)
             Game.loadSuccess();
     }

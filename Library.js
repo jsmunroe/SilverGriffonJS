@@ -70,9 +70,16 @@ class Library {
     }
 
     getTileSet(setName) {
-        var tiles = getResources(Tile, i => i.setName.equalsNoCase(setName));
+        var tiles = this.getResources(Tile, i => i.setName.equalsNoCase(setName));
 
-        // TODO: Create tile set.
+        var tileSet = {
+            wall: tiles.first(i => i.tileType == "Wall"),
+            floor: tiles.first(i => i.tileType == "Floor"),
+            downStair: tiles.first(i => i.tileType == "DownStair"),
+            upStair: tiles.first(i => i.tileType == "UpStair")
+        };
+        
+        return tileSet;
     }
 
     // Get object from JSON at given path.
@@ -86,5 +93,33 @@ class Library {
                         log.error('Could not get object @ "' + path + '": textStatus="' + textStatus + '", errorThrown="' + errorThrown);
                     }
                 });
+    }
+}
+
+
+
+
+class TileSetFactory {
+    constructor(library, setName) {
+        this.tileSet = library.getTileSet(setName);
+    } 
+
+    create() {
+        return this.tileSet;
+    }
+}
+
+
+
+
+class RandomTileSetFactory {
+    constructor(library, setNames) {
+        this.library = library;
+        this.setNames = setNames;
+    }
+
+    create() {
+        var setName = Randomizer.pick(this.setNames);
+        var tileSet = this.library.getTileSet(setName);
     }
 }

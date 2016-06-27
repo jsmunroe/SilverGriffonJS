@@ -4,7 +4,7 @@ class Randomizer {
             return null;
 
         var idx = Math.floor(Math.random() * set.length);
-        return idx;
+        return set[idx];
     }
 
     static pickIndex(set) {
@@ -118,11 +118,12 @@ Array.prototype.first = function(predicate) {
     if (!predicate)
         return this[0];
     
-    this.forEach(i => {
-        if (predicate(i))
-            return i;
-    });
-
+    for (var i = 0; i < this.length; i++) {
+        var item = this[i];
+        if (predicate(item)) {
+            return item;
+        }
+    }
     return void 0;
 }
 

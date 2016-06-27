@@ -194,7 +194,7 @@ class Tile extends Resource {
             return;
         }
 
-        this.tileType = data.tileType || "Unknown";
+        this.tileType = data['tile-type'] || "Unknown";
         this.floors = this.getFloors(data.floors);
     }
 

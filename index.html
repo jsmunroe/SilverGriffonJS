@@ -16,8 +16,7 @@
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
     <script src="Utilities.js"></script>
-    <script src="Layers/Layer.js"></script>
-    <script src="Layers/RoomLayer.js"></script>
+    <script src="Layers.js"></script>
     <script src="Library.js"></script>
     <script src="Resources.js"></script>
     <script src="Controllers.js"></script>
@@ -28,10 +27,6 @@
             var canvas = $('#canvas')[0];
 
             Game.init(canvas, onGameLoaded);
-
-            var room = {};
-            var roomLayer = new RoomLayer(room);
-            Game.addLayer(roomLayer);
 
             canvas.width = $(window).innerWidth();
             canvas.height = $(window).innerHeight();
