@@ -71,6 +71,63 @@ class Randomizer {
     }
 }
 
+
+
+
+// Graphs and Algorithms
+
+// Represents an edge from source to sink with capacity
+var Edge = function(source, sink, capacity) {
+    this.source = source;
+    this.sink = sink;
+    this.capacity = capacity;
+};
+
+// Main class to manage the network
+var Graph = function() {
+    this.edges = {};
+    this.nodes = [];
+    this.nodeMap = {};
+    
+    // Add a node to the graph
+    this.addNode = function(node) {
+        if (this.nodeMap[node])
+            return;
+
+        this.nodes.push(node);
+        this.nodeMap[node] = this.nodes.length-1;
+        this.edges[node] = [];
+    };
+
+    // Does node exist in graph?`
+    this.nodeExists = function(node) {
+        return this.nodeMap[node] != void 0;
+    };
+
+    // Add an edge from source to sink with capacity
+    this.addEdge = function(source, sink, capacity) {
+        // Create the two edges = one being the reverse of the other    
+        this.edges[source].push(new Edge(source, sink, capacity));
+        this.edges[sink].push(new Edge(sink, source, capacity));
+    };
+    
+    // Does edge from source to sink exist?
+    this.edgeExists = function(source, sink) {
+        if(this.edges[source] !== undefined) 
+            for(var i=0;i<this.edges[source].length;i++)
+                if(this.edges[source][i].sink == sink)
+                    return this.edges[source][i];
+        return null;
+    };
+};
+
+
+
+
+
+
+
+
 // String extensions
 
 String.prototype.equalsNoCase = function(other) {
