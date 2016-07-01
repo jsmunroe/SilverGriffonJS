@@ -40,5 +40,27 @@ class RoomLayer extends Layer {
             	context.drawImage(tileFloor.image, x * 50, y * 50, 50, 50);
             }
         }
+
+        for (var i = 0; i < this.room.characters.length; i++) {
+            var character = this.room.characters[i];
+            context.drawImage(character.image, character.x * 50, character.y * 50, 50, 50);
+        }
+    }
+}
+
+class CharacterLayer extends Layer {
+    constructor(characters = []) {
+        super();
+        this.characters = characters;
+    }
+
+    // Update this layer.
+    update(gameState) {
+
+    }
+
+    // Draw this layer.
+    draw(context) {
+        
     }
 }

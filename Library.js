@@ -66,7 +66,7 @@ class Library {
         
         var typeName = type.name;
 
-        return this.resources.where(i => i.is && i.is[type] && selector(i));
+        return this.resources.where(i => i.isType && i.isType[type] && selector(i));
     }
 
     getTileSet(setName) {
@@ -80,6 +80,35 @@ class Library {
         };
         
         return tileSet;
+    }
+
+    pickRandomCharacters(setName, options) {
+        var actual = _.defaults(options || {}, {
+            min: 1,
+            max: 5
+        });
+
+        var characterTypes = this.getResources(Character, i => i.setName.equalsNoCase(setName) && !i.isType[Player])
+
+        var characterCount = Randomizer.nextInt(actual.min, actual.max);
+        var characters = new Array(characterCount);
+
+        for (var i = 0; i < characterCount; i++) {
+            var characterType = Randomizer.pick(characterTypes);
+            var character = characterType.create();
+            characters[i] = character;
+        }
+
+        return characters;
+    }
+
+    getPlayerCharacter(options) {
+        var actual = _.defaults(options || {}, {
+        });
+
+        var player = this.getResources(Player).first();
+
+        return player;
     }
 
     // Get object from JSON at given path.

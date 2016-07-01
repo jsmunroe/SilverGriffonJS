@@ -6,6 +6,8 @@ class World {
     static init(tileSetFactory, roomBuilderFactory) {
         World.tileSetFactory = tileSetFactory;
         World.roomBuilderFactory = roomBuilderFactory;
+        World.currentX = 0;
+        World.currentY = 0;
     }
 
     // Get room a x and y coordinates.
@@ -21,6 +23,8 @@ class World {
             
         return room;       
     }
+
+    static get currentRoom ()  { room(0, 0); }
 
     // Build and return a room.
     static buildRoom() {
@@ -51,10 +55,48 @@ class Room {
         if (!actual.tileSet)
             throw new Error("tileSet not provided!");
 
+        this.characters = [];
+
         this.width = actual.width;
         this.height = actual.height;
         this.tileSet = actual.tileSet;
         this.tiles = actual.tiles;
+    }
+
+    placeCharacter(character, randomize = true) {
+        if (randomize) {
+            var tile = this.pickPlaceableTile();
+            character.x = tile.x;
+            character.y = tile.y;
+        }
+
+        this.characters.push(character);
+    }
+
+    placeCharacters(characters, randomize = true) {
+        characters.forEach(i => this.placeCharacter(i, randomize));
+    }
+
+    getPlaceableTiles() {
+        var tiles = [];
+
+        for (var y = 0; y < this.height; y++) {
+            for (var x = 0; x < this.width; x++) {
+                var tile = this.tiles[y * this.width + x];
+                var characters = this.characters.where(i => i.x == x && i.y == y);
+                if (tile.tileType != 'wall' && characters.length <= 0) {
+                    tiles.push(tile);
+                }
+            }
+        }
+
+        return tiles;
+    }
+
+    pickPlaceableTile() {
+        var placeableTiles = this.getPlaceableTiles();
+        var tile = Randomizer.pick(placeableTiles);
+        return tile;
     }
 
     getTileFloor(x, y) {
@@ -125,12 +167,16 @@ class RoomBuilder {
 
         for (var y = 0; y < actual.height; y++) {
             for (var x = 0; x < actual.width; x++) {
+                var tile;
                 if (x == 0 || y == 0 || x == actual.width - 1 || y == actual.height - 1) {
-                    tiles[y * actual.width + x] = this.pickTile(actual.tileSet, "wall");
+                    tile = this.pickTile(actual.tileSet, "wall");
+                } else {
+                    tile = this.pickTile(actual.tileSet, "floor");
                 }
-                else {
-                    tiles[y * actual.width + x] = this.pickTile(actual.tileSet, "floor");
-                }
+
+                tile.x = x; 
+                tile.y = y;
+                tiles[y * actual.width + x] = tile;
             }
         }
 
@@ -178,12 +224,17 @@ class MazeRoomBuilder extends RoomBuilder {
 
         for (var y = 0; y < actual.height; y++) {
             for (var x = 0; x < actual.width; x++) {
+                var tile;
+
                 if (mazeTiles[y * actual.width + x] == 1) {
-                    tiles[y * actual.width + x] = this.pickTile(actual.tileSet, "wall");
+                    tile = this.pickTile(actual.tileSet, "wall");
+                } else {
+                    tile = this.pickTile(actual.tileSet, "floor");
                 }
-                else {
-                    tiles[y * actual.width + x] = this.pickTile(actual.tileSet, "floor");
-                }
+
+                tile.x = x; 
+                tile.y = y;
+                tiles[y * actual.width + x] = tile;
             }
         }
 
@@ -228,8 +279,8 @@ class Maze {
     }
 
     build() {
-        var currentX = Math.floor(Math.random() * this.width);
-        var currentY = Math.floor(Math.random() * this.height);
+        var currentX = Randomizer.nextInt(this.width);
+        var currentY = Randomizer.nextInt(this.height);
         var current = this.getCell(currentX, currentY);
         current.visited = true;
 

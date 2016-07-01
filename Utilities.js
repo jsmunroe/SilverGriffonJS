@@ -1,9 +1,21 @@
 class Randomizer {
+    static nextInt(min, max) {
+        if (min && !max) { // to support "nextInt(n)"
+            max = min;
+            min = 0;
+        }
+
+        var range = max - min;
+        var value = Math.floor(Math.random() * range) + min;
+
+        return value;
+    }
+
     static pick(set) {
         if (!set instanceof Array || set.length <= 0)
             return null;
 
-        var idx = Math.floor(Math.random() * set.length);
+        var idx = Randomizer.nextInt(set.length);
         return set[idx];
     }
 
@@ -11,7 +23,7 @@ class Randomizer {
         if (!set instanceof Array || set.length <= 0)
             return null;
 
-        var idx = Math.floor(Math.random() * set.length);
+        var idx = Randomizer.nextInt(set.length);
         return idx;
     }
 

@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "target": "ES6"
+    },
+    "files": [
+        "Input.js",
+        "Characters.js",
+        "TurnManager.js",
+        "Controllers.js",
+        "Game.js",
+        "Layers.js",
+        "Library.js",
+        "Resources.js",
+        "Utilities.js",
+        "World.js"
+    ]
+}

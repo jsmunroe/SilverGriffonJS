@@ -23,7 +23,11 @@ class Game {
         Game.update();
         Game.draw(Game.ctx);
 
-        Game.intHandle = requestAnimationFrame(function (time) { Game.interval(game, time); });
+        var next = function () {
+            Game.intHandle = requestAnimationFrame(function (time) { Game.interval(game, time); });
+        }
+
+        turnManager.step(next);
     }
 
     // Update the game.
@@ -56,8 +60,15 @@ class Game {
     static onLoad() {
         World.init(new TileSetFactory(Game.library, "Stone"), new RandomRoomBuilderFactory());
 
-        // Add room layer.
         var room = World.room(0,0);
+        var player = Game.library.getPlayerCharacter({});
+        turnManager.add(player);
+        room.placeCharacter(player); 
+
+        //var characters = Game.library.pickRandomCharacters("Sewer");
+        //room.placeCharacters(characters);
+
+        // Add room layer.
         var roomLayer = new RoomLayer(room);
         Game.layers.push(roomLayer);
 
