@@ -1,45 +1,51 @@
 const roomWidth = 15;
 const roomHeight = 15;
 
-class World {
-    // Initialize the world.
-    static init(tileSetFactory, roomBuilderFactory) {
-        World.tileSetFactory = tileSetFactory;
-        World.roomBuilderFactory = roomBuilderFactory;
-        World.currentX = 0;
-        World.currentY = 0;
-    }
-
-    // Get room a x and y coordinates.
-    static room(x, y) {
-        if (!World.rooms)
-            World.rooms = {};
-
-        var room = World.rooms[x+":"+y]
-        if (!room) {
-            room = World.buildRoom();
-            World.rooms[x+":"+y] = room;
+(function($) {
+    class World {
+        constructor(options) {
+            this.tileSetFactory = options.tileSetFactory;
+            this.roomBuilderFactory = options.roomBuilderFactory;
+            this.currentX = options.currentX || 0;
+            this.currentY = options.currentY || 0;
+            this.rooms = {};
         }
-            
-        return room;       
+
+        // Get room a x and y coordinates.
+        room(x, y) {
+            var room = this.rooms[x+":"+y]
+            if (!room) {
+                room = this.buildRoom();
+                this.rooms[x+":"+y] = room;
+            }
+                
+            return room;       
+        }
+
+        get currentRoom ()  { room(0, 0); }
+
+        // Build and return a room.
+        buildRoom() {
+            var builder = this.roomBuilderFactory.create();
+            var tileSet = this.tileSetFactory.create();
+
+            var room = builder.build({
+                width: roomWidth,
+                height: roomHeight,
+                tileSet: tileSet,
+            });
+
+            return room;
+        }
     }
 
-    static get currentRoom ()  { room(0, 0); }
-
-    // Build and return a room.
-    static buildRoom() {
-        var builder = World.roomBuilderFactory.create();
-        var tileSet = World.tileSetFactory.create();
-
-        var room = builder.build({
-            width: roomWidth,
-            height: roomHeight,
-            tileSet: tileSet,
-        });
-
-        return room;
-    }
-}
+    TypeContainer.register(GameTypes.world, () => 
+        new World({
+            tileSetFactory: new TileSetFactory("Stone"), 
+            roomBuilderFactory: new RandomRoomBuilderFactory()}
+        )
+    );
+})(jQuery);
 
 
 

@@ -128,7 +128,7 @@ class InputController extends Controller {
     }
 
     act(character, next) {
-        inputService.waitKeyUp(key => {
+        GameAssets.inputService.waitKeyUp(key => {
             if (key == InputCommands.moveUp.name) {
                 character.y--;
                 next();

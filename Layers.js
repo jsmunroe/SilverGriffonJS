@@ -1,6 +1,7 @@
 class Layer{
     constructor() {
-
+        Layer.nextId = Layer.nextId || 0;
+        this.Id = Layer.nextId++;
     }
 
     // Update this layer.
@@ -32,7 +33,8 @@ class RoomLayer extends Layer {
 
     // Draw this layer.
     draw(context) {
-        var tileSet = Game.library.getTileSet("Stone");
+        var library = GameAssets.library;
+        var tileSet = library.getTileSet("Stone");
 
         for (var y = 0; y < this.room.height; y++) {
             for (var x = 0; x < this.room.width; x++) {

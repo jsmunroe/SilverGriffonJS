@@ -15,7 +15,7 @@ class InputCommands {
     static get rest() { return new InputCommands('moveRight'); }
 }
 
-var inputService = (function($) {
+(function($) {
     var keysConfig = {
         87: InputCommands.moveUp,       // w key
         65: InputCommands.moveLeft,     // a key  
@@ -71,5 +71,5 @@ var inputService = (function($) {
         }
     }
 
-    return new InputService();
+    TypeContainer.register(GameTypes.inputService, () => new InputService());
 })(jQuery);

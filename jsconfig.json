@@ -3,6 +3,7 @@
         "target": "ES6"
     },
     "files": [
+        "Container.js",
         "Input.js",
         "Characters.js",
         "TurnManager.js",

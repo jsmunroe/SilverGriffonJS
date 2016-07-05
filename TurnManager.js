@@ -1,4 +1,4 @@
-var turnManager = (function($){
+(function($){
     class TurnManager {
         constructor() {
             this.characters = [];
@@ -20,5 +20,5 @@ var turnManager = (function($){
         }
     }
 
-    return new TurnManager();
+    TypeContainer.register(GameTypes.turnManager, () => new TurnManager());
 })(jQuery);
