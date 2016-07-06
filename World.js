@@ -124,11 +124,15 @@ class Room {
         return floor;
     }
 
+    getTileInfo(x, y) {
+        return this.tiles[y * this.width + x];
+    }
+
     getTilePassible(x, y) {
         var tileInfo = this.tiles[y * this.width + x];
 
         if (!tileInfo)
-            return true;
+            return false;
         
         var tileType = tileInfo.tileType;
 
@@ -189,6 +193,8 @@ class RoomBuilder {
 
                 tile.x = x; 
                 tile.y = y;
+                tile.isSeen = false;
+                tile.isVisible = false;
                 tiles[y * actual.width + x] = tile;
             }
         }
@@ -247,6 +253,8 @@ class MazeRoomBuilder extends RoomBuilder {
 
                 tile.x = x; 
                 tile.y = y;
+                tile.isSeen = false;
+                tile.isVisible = false;
                 tiles[y * actual.width + x] = tile;
             }
         }
@@ -361,6 +369,11 @@ class Maze {
     }
 }
 
+
+
+
+
+
 class MazeCell {
     constructor(maze, x, y) {
         this.maze = maze;
@@ -389,4 +402,190 @@ class MazeCell {
 
         return neighbors.where(i => !i.visited);
     }
+}
+
+
+
+
+
+
+class ShadowCaster {
+    constructor(room) {
+        this.room = room;
+    }
+
+    clear() {
+        for (var y = 0; y < this.room.height; y++) {
+            for (var x = 0; x < this.room.width; x++) {
+                var tileInfo = this.room.getTileInfo(x, y);
+                if (tileInfo) {
+                    tileInfo.isVisible = false;
+                }
+            }
+        }
+    }
+
+    isOpaque(x, y) {
+        return !this.room.getTilePassible(x, y);
+    }
+
+    setFov(x, y) {
+        var tileInfo = this.room.getTileInfo(x, y);
+        if (tileInfo) {
+            tileInfo.isVisible = true;
+            tileInfo.isSeen = true;
+        }
+    }
+
+    cast(x, y, radius) {
+        this.clear();
+        var self = this;
+
+        var opaque = this.translateOrigin((x, y) => self.isOpaque(x, y), x, y);
+        var fov = this.translateOrigin((x, y) => self.setFov(x, y), x, y);
+
+        for (var octant = 0; octant < 8; ++octant) {
+            this.castInOctantZero(
+                this.translateOctant(opaque, octant),
+                this.translateOctant(fov, octant),
+                radius
+            );
+        }
+    }
+
+    castInOctantZero(isOpaque, setFov, radius) {
+        var queue = new Queue();
+        queue.enqueue({ x: 0, bottom: { x: 1, y: 0 }, top: {x: 1, y: 1} });
+        while (queue.getLength() > 0) {
+            var current = queue.dequeue();
+            if (current.x > radius)
+                continue;
+
+            this.computerFovForColumnPortion(current.x, current.top, current.bottom, isOpaque, setFov, radius, queue);
+        }
+    }
+
+    // This method has two main purposes: (1) it marks points inside the
+    // portion that are within the radius as in the field of view, and 
+    // (2) it computes which portions of the following column are in the 
+    // field of view, and puts them on a work queue for later processing. 
+    computerFovForColumnPortion(x, top, bottom, isOpaque, setFov, radius, queue) {
+        // Search for transitions from opaque to transparent or
+        // transparent to opaque and use those to determine what
+        // portions of the *next* column are visible from the origin.
+
+        // Start at the top of the column portion and work down.
+        var topY;
+        if (x === 0) {
+            topY = 0;
+        }
+        else {
+            var quotient = Math.floor((2 * x + 1) * top.y / (2 * top.x));
+            var remander = (2 * x + 1) * top.y % (2 * top.x);
+
+            if (remander > top.x) {
+                topY = quotient + 1;
+            } else {
+                topY = quotient;
+            }
+        }
+
+        // Note that this can find a top cell that is actually entirely blocked by
+        // the cell below it; consider detecting and eliminating that.
+
+        var bottomY;
+        if (x == 0) {
+            bottomY = 0;
+        } else {
+            var quotient = Math.floor((2 * x - 1) * bottom.y / (2 * bottom.x));
+            var remainder = (2 * x - 1) * bottom.y % (2 * bottom.x);
+
+            if (remainder >= bottom.x)
+                bottomY = quotient + 1;
+            else
+                bottomY = quotient;
+        }
+
+        // A more sophisticated algorithm would say that a cell is visible if there is 
+        // *any* straight line segment that passes through *any* portion of the origin cell
+        // and any portion of the target cell, passing through only transparent cells
+        // along the way. This is the "Permissive Field Of View" algorithm, and it
+        // is much harder to implement.
+
+        var wasLastCellOpaque = null;
+        for (var y = topY; y >= bottomY; --y) {
+            var inRadius = this.isInRadius(x, y, radius);
+            if (inRadius) {
+                // The current cell is in the field of view.
+                setFov(x,y);
+            }
+
+            // A cell that was too far away to be seen is effectively
+            // an opaque cell; nothing "above" it is going to be visible
+            // in the next column, so we might as well treat it as 
+            // an opaque cell and not scan the cells that are also too
+            // far away in the next column.
+
+            var currentIsOpaque = !inRadius || isOpaque(x, y);
+            if (wasLastCellOpaque != null) {
+                if (currentIsOpaque) {
+                    // We've found a boundary from transparent to opaque. Make a note
+                    // of it and revisit it later.
+                    if (!wasLastCellOpaque) {
+                        // The new bottom vector touches the upper left corner of 
+                        // opaque cell that is below the transparent cell.
+                        queue.enqueue({ x: x + 1, bottom: { x: x * 2 - 1, y: y * 2 + 1 }, top: top });
+                    }
+                }
+                if (wasLastCellOpaque) {
+                    // We've found a boundary from opaque to transparent. Adjust the
+                    // top vector so that when we find the next boundary or do
+                    // the bottom cell, we have the right top vector.
+                    //
+                    // The new top vector touches the lower right corner of the 
+                    // opaque cell that is above the transparent cell, which is
+                    // the upper right corner of the current transparent cell.
+                    top = { x: x * 2 + 1, y: y * 2 + 1 }
+                }
+            }
+            wasLastCellOpaque = currentIsOpaque;
+        }
+
+        // Make a note of the lowest opaque-->transparent transition, if there is one. 
+        if (wasLastCellOpaque != null && !wasLastCellOpaque) {
+            queue.enqueue({ x: x + 1, bottom: bottom, top: top });
+        }
+    }
+
+    // Is the lower-left corner of cell (x,y) within the radius?
+    isInRadius(x, y, length) {
+        return (2 * x - 1) * (2 * x - 1) + (2 * y - 1)  * (2 * y - 1) <= 4 * length * length;
+    }
+
+    // Octant helpers
+    //
+    //
+    //                 \2|1/
+    //                 3\|/0
+    //               ----+----
+    //                 4/|\7
+    //                 /5|6\
+    //
+    // 
+
+    translateOrigin(f, x, y) {
+        return (a, b) => f(a + x, b + y);
+    }
+
+    translateOctant(f, octant) {
+        if (octant === 1) return (x, y) => f(y, x);
+        else if (octant === 2) return (x, y) => f(-y, x);
+        else if (octant === 3) return (x, y) => f(-x, y);
+        else if (octant === 4) return (x, y) => f(-x, -y);
+        else if (octant === 5) return (x, y) => f(-y, -x);
+        else if (octant === 6) return (x, y) => f(y, -x);
+        else if (octant === 7) return (x, y) => f(x, -y);
+        else return f;
+    }
+
 }

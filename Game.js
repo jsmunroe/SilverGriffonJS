@@ -65,7 +65,9 @@ class GameAssets {
 
         // Draw the this.
         draw(ctx) {
-            for (var i = 0; i < this.layers.length; i++) {
+            ctx.clearRect(0, 0, this.buffer.width, this.buffer.height);
+
+            for (var i = 0; i < this.layers.length; i++) {             
                 var layer = this.layers[i];
                 layer.draw(ctx);
             }
