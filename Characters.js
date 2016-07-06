@@ -5,6 +5,7 @@ class Character extends Resource {
         this.isType[Character] = true;
         this.x = 0;
         this.y = 0;
+        this.facing = 'right';
     }
 
     read(data) {
@@ -36,6 +37,24 @@ class Character extends Resource {
 
     create() {
         return new Character(this.rawData);
+    }
+
+    moveLeft() {
+        this.x--;
+        this.facing = 'left';
+    }
+
+    moveRight() {
+        this.x++;
+        this.facing = 'right';
+    }
+
+    moveUp() {
+        this.y--;
+    }
+
+    moveDown() {
+        this.y++;
     }
 
     getCharacteristics(characteristics) {

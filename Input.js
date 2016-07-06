@@ -1,18 +1,10 @@
 class InputCommands {
-    constructor(name) {
-        this.name = name;
-    }
-
-    toString() {
-        return this.name;
-    }
-
-    static get unknown() { return new InputCommands(''); }
-    static get moveUp() { return new InputCommands('moveUp'); }
-    static get moveDown() { return new InputCommands('moveDown'); }
-    static get moveLeft() { return new InputCommands('moveLeft'); }
-    static get moveRight() { return new InputCommands('moveRight'); }
-    static get rest() { return new InputCommands('moveRight'); }
+    static get unknown() { return ''; }
+    static get moveUp() { return 'moveUp'; }
+    static get moveDown() { return'moveDown'; }
+    static get moveLeft() { return 'moveLeft'; }
+    static get moveRight() { return 'moveRight'; }
+    static get rest() { return 'moveRight'; }
 }
 
 (function($) {
@@ -37,21 +29,25 @@ class InputCommands {
 
             $(document).keydown(function (ev) {
                 var command = keysConfig[ev.which] || InputCommands.unknown;
-                self.keyDownCallbacks.forEach(function (callback) {
+                var keyDownCallbacks = self.keyDownCallbacks;
+                self.keyDownCallbacks = [];
+                keyDownCallbacks.forEach(function (callback) {
                     callback(command);
                 })
-                self.keyDownCallbacks = []; // Not thread safe.
 
                 console.log('Key down:' + command);
             });
 
             $(document).keyup(function (ev) {
                 var command = keysConfig[ev.which] || InputCommands.unknown;
-                self.keyUpCallbacks.forEach(function (callback) {
+                var keyUpCallbacks = self.keyUpCallbacks;
+                self.keyUpCallbacks = [];
+                keyUpCallbacks.forEach(function (callback) {
                     callback(command);
                 })
-                self.keyUpCallbacks = []; // Not thread safe.
-            });
+
+                console.log('Key up:' + command);
+           });
         }
 
         waitKeyDown(callback) {

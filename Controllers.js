@@ -129,21 +129,34 @@ class InputController extends Controller {
 
     act(character, next) {
         GameAssets.inputService.waitKeyUp(key => {
-            if (key == InputCommands.moveUp.name) {
-                character.y--;
+            if (key == InputCommands.moveUp) {
+                if (!GameAssets.world.currentRoom.getTilePassible(character.x, character.y - 1)) {
+                    return this.act(character, next);
+                }
+                character.moveUp();
                 next();
-            } else if (key == InputCommands.moveDown.name) {
-                character.y++;
+            } else if (key == InputCommands.moveDown) {
+                if (!GameAssets.world.currentRoom.getTilePassible(character.x, character.y + 1)) {
+                    return this.act(character, next);
+                }
+                character.moveDown();
                 next();
-            } else if (key == InputCommands.moveLeft.name) {
-                character.x--;
+            } else if (key == InputCommands.moveLeft) {
+                if (!GameAssets.world.currentRoom.getTilePassible(character.x - 1, character.y)) {
+                    return this.act(character, next);
+                }
+                character.moveLeft();
                 next();
-            } else if (key == InputCommands.moveRight.name) {
-                character.x++;
+            } else if (key == InputCommands.moveRight) {
+                if (!GameAssets.world.currentRoom.getTilePassible(character.x + 1, character.y)) {
+                    return this.act(character, next);
+                }
+                character.moveRight();
                 next();
             } else {
                 this.act(character, next);
             }
         });
-    }}
+    }
+}
 

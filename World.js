@@ -22,7 +22,7 @@ const roomHeight = 15;
             return room;       
         }
 
-        get currentRoom ()  { room(0, 0); }
+        get currentRoom ()  { return this.room(this.currentX, this.currentY); }
 
         // Build and return a room.
         buildRoom() {
@@ -125,7 +125,14 @@ class Room {
     }
 
     getTilePassible(x, y) {
-        return true;
+        var tileInfo = this.tiles[y * this.width + x];
+
+        if (!tileInfo)
+            return true;
+        
+        var tileType = tileInfo.tileType;
+
+        return tileType != 'wall'
     }
 
     getTileIsType(tileType) {

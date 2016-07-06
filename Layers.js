@@ -42,18 +42,13 @@ class RoomLayer extends Layer {
             	context.drawImage(tileFloor.image, x * 50, y * 50, 50, 50);
             }
         }
-
-        for (var i = 0; i < this.room.characters.length; i++) {
-            var character = this.room.characters[i];
-            context.drawImage(character.image, character.x * 50, character.y * 50, 50, 50);
-        }
     }
 }
 
 class CharacterLayer extends Layer {
-    constructor(characters = []) {
+    constructor(room) {
         super();
-        this.characters = characters;
+        this.room = room;
     }
 
     // Update this layer.
@@ -63,6 +58,17 @@ class CharacterLayer extends Layer {
 
     // Draw this layer.
     draw(context) {
-        
+        for (var i = 0; i < this.room.characters.length; i++) {
+            var character = this.room.characters[i];
+
+            if (character.facing === 'right') {
+                context.save();
+                context.scale(-1, 1);
+                context.drawImage(character.image, -character.x * 50, character.y * 50, -50, 50);
+                context.restore();
+            } else {
+                context.drawImage(character.image, character.x * 50, character.y * 50, 50, 50);
+            }
+        }
     }
 }

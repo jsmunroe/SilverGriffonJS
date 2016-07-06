@@ -89,12 +89,16 @@ class GameAssets {
             GameAssets.turnManager.add(player);
             room.placeCharacter(player); 
 
-            //var characters = this.library.pickRandomCharacters("Sewer");
-            //room.placeCharacters(characters);
+            var characters = this.library.pickRandomCharacters("Sewer");
+            room.placeCharacters(characters);
 
             // Add room layer.
             var roomLayer = new RoomLayer(room);
             this.layers.push(roomLayer);
+
+            // Add character layer.
+            var characterLayer = new CharacterLayer(room);
+            this.layers.push(characterLayer);
 
             // Notify client if subscribed.
             if (this.loadSuccess instanceof Function)
